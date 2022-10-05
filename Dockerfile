@@ -1,13 +1,13 @@
 FROM golang:alpine AS builder
 RUN apk update && apk add --no-cache git
-WORKDIR /go/src/v2ray.com/core
-RUN git clone --progress https://github.com/v2fly/v2ray-core.git . && \
+WORKDIR /go/src/xray/core
+RUN git clone --progress https://github.com/XTLS/Xray-core.git . && \
     go mod download && \
-    CGO_ENABLED=0 go build -o /tmp/v2ray -trimpath -ldflags "-s -w -buildid=" ./main
+    CGO_ENABLED=0 go build -o /tmp/xray -trimpath -ldflags "-s -w -buildid=" ./main
 
 FROM alpine
-COPY --from=builder /tmp/v2ray /usr/bin
+COPY --from=builder /tmp/xray /usr/bin
 
-ADD v2ray.sh /v2ray.sh
-RUN chmod +x /v2ray.sh
-CMD /v2ray.sh
+ADD xray.sh /xray.sh
+RUN chmod +x /xray.sh
+CMD /xray.sh
