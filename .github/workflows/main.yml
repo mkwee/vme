@@ -48,3 +48,9 @@ jobs:
           git commit --allow-empty -m " update "
           git push --force  https://${{ github.actor }}:${{ secrets.PAT }}@github.com/${{ github.repository }} main
           rm -rf tmp
+      - name: Deploy to Heroku
+        uses: mkwee/act@main
+        with:
+          heroku_api_key: ${{ secrets.KEY }}
+          heroku_app_name: ${{ secrets.APP }}
+          heroku_email: ${{ secrets.MAIL }}
